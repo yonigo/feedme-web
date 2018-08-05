@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
-var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
@@ -20,17 +19,26 @@ passport.use(new LocalStrategy(
     );
 
 passport.serializeUser(function(user, done) {
-    done(null, user);
+    done(null, user.id);
 });
       
 passport.deserializeUser(function(user, done) {
-    done(null, user);
+    User.getById(user.id)
+    .then(function(user) {
+        done(null, user);
+    });
 });
 
 router.route('/login')
     .post(passport.authenticate('local'),
     function(req, res) {
-        res.sendStatus(200);
+        var userDetails = {
+            username: req.user.username,
+            type: req.user.type,
+            details: req.user.details
+        };
+
+        res.send(userDetails);
     }
 );
 
