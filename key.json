@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "model-magnet-212406",
+  "private_key_id": "926958719e86d701e87b3153c671958393cd093d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDBNYH8v0BNrbxR\nbo1S/1xIfPrInXfg8NDcobpLym+/yJYzgVoUD1a/4QMOAJ3Sax0uWFNOsllPznWT\nOa8OSwTIoMOOFpgJGrqdHlR0lhPXa6lTbTmcFitbLBHAWg2FHVX3z9iJgfroelLw\nGpdaMU1zjZNYzjxrwTKZ3Ta105wRKfPiXUut+7DPG9/+af/Hy9WbcR3PR2xwGXdu\nAIuDpbSxBOx8eUrM2wyqgmEahMb7oJomPme4Hv6qwhLENh3zKPXs4K3O6Gj3KmnY\n1DLOk2HHrX6+09FP4j/IQWlJXbopJ9e49JGT2SzSifLjAPXqnwqmlRUQEjQkOawR\n8Bz++1mdAgMBAAECggEAKI7AKOuHxtad1bVAhufyegf8R/EgSVCb83iiqAbIgwiL\nGShB3byjj/dewgl4l8Ni9ofVgwtWyrUzArME75npWOlAa7sL8rtQ6asEfQ3E//9K\nZegjhAO2WbbsSgXNWUBhe7n+gU0O+86zytG2LFl1ofhZ8jYmwlLluZ1RfwU6+XII\n43JKt6cY0kXGouuQDRY0emzvFB8Oqdz8VzxNkqTfP7QYsT3Ro9v1SE0LM4X6f8GS\n2aVJv8IW5hjWjmnAAQeOAea3v8OaAIcR8N+21PjU563IHNB2Fke6tzz5YFqXFYUx\nZl78UX1ItB4BMDiHsZlB0IR5ozNs8thg3kvrd2flWQKBgQDlyaRm0aQHrGLFkTjg\n/+I3Zhlu2Mds94aq4jDDFqLMcZ40hOimg6J3X9YoG0modw07JOky0BG6b+0jHbVg\n3Mlki27gJYuy73N11kyFLpwh1kWvjBOC03OhDlm5EY3rs+GgG9o727D7RHYu8zEk\na/4A85YPMfUNC+qaVmDVOLzJeQKBgQDXP64fEGcdjCDcTICoWFwkWorS5jcTY1kK\nG5m6qnnP4hxuaUMObMLdLiidanLy1JJa3+2hOZP+K6SX6EJYpx9AhM9qJPPR7SP8\nHpkLmSu0VC8/mt96OaZsBNxUmScaqXcyKjZXcOwZUcXddDX/nPPKehApujLUJKKu\nl+MA+2psRQKBgQCxMp/Okhd1u1+njudXyrs9kURHkG+o/fAhUq/boVcFZRBk26E0\n1wmwGH1jDDfu62+OjlYuUvl41dr+W2iFO30qRcPIoetqnvBgjFMR2PGZvkyapOBe\n4ISoTBKwfnL8sghpmVDfG/kMqqygY/Ufaw/C2BR9vz6DQw802StvAYPDsQKBgQCW\nxQsgxSuFHc8yn/+Ka4H3ENimiwzO7srCcrzGbHywaTADAoYux23i4V8fjB2CC/WL\n48geIyePZGCA6vX2BPG2DpD+R23lgFaxVXlcD2j2gfUqdz/L7C+u/+SY+UHTwho0\nsC6qJvWpcobG7IyaRATbsY46vCq4QAUXiFpAKNrNhQKBgBjr51j3GVhX/pN9OmkU\nLpiSunqgJ4/NY1DcmiwnYCPhdyihQsAMmvMuseohbPx3TvfEkvIZhW3yCCqYOuWV\nCjJxM5PhVZPtT4TJ+77WkYr37xqRYkcgEwxLQQwmIWQUVRIoFFl7Q94j1pgs0+dM\nE9mBc/eH8dMnZHKgnU98CwUg\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-ds8b6@model-magnet-212406.iam.gserviceaccount.com",
+  "client_id": "103561520423971007884",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-ds8b6%40model-magnet-212406.iam.gserviceaccount.com"
+}

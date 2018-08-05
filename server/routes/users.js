@@ -42,4 +42,17 @@ router.route('/login')
     }
 );
 
+router.route('/registerChromePush')
+    .post(//passport.authenticate('local', {session: true}),
+    function(req, res) {
+        var userDetails = {
+            username: req.user.username,
+            type: req.user.type,
+            details: req.user.details
+        };
+
+        res.send(userDetails);
+    }
+);
+
 module.exports = router;

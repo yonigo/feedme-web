@@ -1,4 +1,5 @@
 import { Component,OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 declare var google: any, GeoCode: any, firebase: any;
 
@@ -15,10 +16,28 @@ export class OrdersComponent implements OnInit {
     public markers: any = [];
     public map: any = null;
 
+    constructor(private httpClient:HttpClient) {
+        var data = {
+            "username": "backoffice01",
+            "password": "123456"
+          };
+      
+          var promise = httpClient.post('http://localhost:3000/users/login', data).toPromise();
+      
+        //   promise.then(function(data) {
+        //     console.log(data);
+        //     return httpClient.post('http://localhost:3000/users/registerChromePush', data)
+        //   }).then( (data) => {
+        //     httpClient.get('http://localhost:3000/orders/supplier/5b66e7782210230c28d5a456', {withCredentials: true}).toPromise().then(function(data) {
+        //         console.log(data);
+        //       })
+        //   })
+    }
+
     ngOnInit() {
         let googleGeoCode   = new GeoCode('google', { key: 'AIzaSyD_NMEe_Y-jP1p37eXkI_ua5J-XXi_TTFA' });
         const messaging = firebase.messaging();
-        messaging.usePublicVapidKey("BKagOny0KF_2pCJQ3m....moL0ewzQ8rZu");
+        messaging.usePublicVapidKey("BFEu4qbkvDdhsxAySDDom7WddVoJpm9q2zXDODZ61FcetroIErhVkD6lS3kXE8XjJjchXD9GuslTgYvsqs_98YY");
         messaging.requestPermission().then(function() {
             console.log('Notification permission granted.');
             // TODO(developer): Retrieve an Instance ID token for use with FCM.
@@ -28,6 +47,7 @@ export class OrdersComponent implements OnInit {
         });
         messaging.getToken().then(function(currentToken) {
             if (currentToken) {
+                console.log("Token is ", currentToken);
               //sendTokenToServer(currentToken);
               //updateUIForPushEnabled(currentToken);
             } else {
@@ -56,6 +76,11 @@ export class OrdersComponent implements OnInit {
               console.log('Unable to retrieve refreshed token ', err);
               //showToken('Unable to retrieve refreshed token ', err);
             });
+          });
+
+          messaging.onMessage(function(payload) {
+            console.log('Message received. ', payload);
+            // ...
           });
 
 
