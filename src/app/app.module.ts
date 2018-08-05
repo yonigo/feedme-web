@@ -19,6 +19,7 @@ import { MapsComponent }   from './maps/maps.component';
 import { OrdersComponent }   from './orders/orders.component';
 import { NotificationsComponent }   from './notifications/notifications.component';
 import { UpgradeComponent }   from './upgrade/upgrade.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { UpgradeComponent }   from './upgrade/upgrade.component';
     NavbarModule,
     FooterModule,
     FixedPluginModule,
+    HttpClientModule,
     NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyD_NMEe_Y-jP1p37eXkI_ua5J-XXi_TTFA'})
 
   ],
