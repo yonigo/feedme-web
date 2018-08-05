@@ -9,8 +9,8 @@ passport.use(new LocalStrategy(
     function(username, password, done) {
         User.login(username, password)
             .then(function(user) {
-                if (user.errors) { 
-                    return done(err); 
+                if (!user) { 
+                    return done(null, null, { message: 'User not found' }); 
                 }
                 else {
                     return done(null, user);
