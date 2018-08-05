@@ -15,27 +15,44 @@ export class OrdersComponent implements OnInit {
     public tableData1: any;
     public markers: any = [];
     public map: any = null;
+    private googleGeoCode: any;
+    public user = {
+        "username": "backoffice01",
+        "password": "123456"
+    };
+    public orders: any = [];
 
     constructor(private httpClient:HttpClient) {
-        var data = {
-            "username": "backoffice01",
-            "password": "123456"
-          };
-      
-          var promise = httpClient.post('http://localhost:3000/users/login', data).toPromise();
-      
-        //   promise.then(function(data) {
-        //     console.log(data);
-        //     return httpClient.post('http://localhost:3000/users/registerChromePush', data)
-        //   }).then( (data) => {
-        //     httpClient.get('http://localhost:3000/orders/supplier/5b66e7782210230c28d5a456', {withCredentials: true}).toPromise().then(function(data) {
-        //         console.log(data);
-        //       })
-        //   })
+        this.googleGeoCode   = new GeoCode('google', { key: 'AIzaSyD_NMEe_Y-jP1p37eXkI_ua5J-XXi_TTFA' });
+
+        //httpClient.post('http://localhost:3000/users/login', this.user).toPromise();
+        httpClient.get('http://localhost:3000/orders').toPromise().then((data) => {
+            console.log(data);
+            this.orders = data;
+            this.orders.forEach(e => {   
+                e.orderDate = new Date(e.orderDate).toDateString();
+                this.googleGeoCode.geolookup(e.supplier.details.address).then(result => {
+                    console.log(result);
+                    this.markers.push(result[0]);
+                    if (this.map)
+                        this.map.setCenter([result[0].lat, result[0].lng]);
+                });
+            });
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+    private updateServerWithToken(token) {
+        this.httpClient.post('http://localhost:3000/users/registerChromePush', {username: this.user.username, chromeToken: token}).toPromise().then(function(data) {
+            console.log(data);
+        }).catch(err => {
+            console.log(err);
+        })
     }
 
     ngOnInit() {
-        let googleGeoCode   = new GeoCode('google', { key: 'AIzaSyD_NMEe_Y-jP1p37eXkI_ua5J-XXi_TTFA' });
+
         const messaging = firebase.messaging();
         messaging.usePublicVapidKey("BFEu4qbkvDdhsxAySDDom7WddVoJpm9q2zXDODZ61FcetroIErhVkD6lS3kXE8XjJjchXD9GuslTgYvsqs_98YY");
         messaging.requestPermission().then(function() {
@@ -45,9 +62,10 @@ export class OrdersComponent implements OnInit {
         }).catch(function(err) {
             console.log('Unable to get permission to notify.', err);
         });
-        messaging.getToken().then(function(currentToken) {
+        messaging.getToken().then((currentToken) =>{
             if (currentToken) {
                 console.log("Token is ", currentToken);
+                this.updateServerWithToken(currentToken);
               //sendTokenToServer(currentToken);
               //updateUIForPushEnabled(currentToken);
             } else {
@@ -72,6 +90,7 @@ export class OrdersComponent implements OnInit {
               // Send Instance ID token to app server.
               //sendTokenToServer(refreshedToken);
               // ...
+              this.updateServerWithToken(refreshedToken);
             }).catch(function(err) {
               console.log('Unable to retrieve refreshed token ', err);
               //showToken('Unable to retrieve refreshed token ', err);
@@ -80,7 +99,19 @@ export class OrdersComponent implements OnInit {
 
           messaging.onMessage(function(payload) {
             console.log('Message received. ', payload);
-            // ...
+            this.httpClient.get('http://localhost:3000/orders/' + payload.id).toPromise().then(function(data) {
+                data.isNew = true;
+                data.orderDate = new Date(data.orderDate).toDateString();
+                this.googleGeoCode.geolookup(data.supplier.details.address).then(result => {
+                    console.log(result);
+                    this.markers.push(result[0]);
+                    if (this.map)
+                        this.map.setCenter([result[0].lat, result[0].lng]);
+                });
+                this.orders.push(data);
+            }).catch(err => {
+                console.log(err);
+            })
           });
 
 
@@ -93,14 +124,7 @@ export class OrdersComponent implements OnInit {
             ]
         };
 
-        this.tableData1.dataRows.forEach(e => {   
-            googleGeoCode.geolookup(e.address + " " + e.city).then(result => {
-                console.log(result);
-                this.markers.push(result[0]);
-                if (this.map)
-                    this.map.setCenter([result[0].lat, result[0].lng]);
-            });
-        });
+
 
 
 

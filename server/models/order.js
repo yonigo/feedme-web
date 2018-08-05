@@ -14,7 +14,7 @@ var orderSchema = new Schema({
     product: String,
     quantity: Number,
     package: String,
-    supplierId: String,
+    supplier: { type: Schema.Types.ObjectId, ref: 'User' },
     reciverId: String
 });
 
@@ -24,9 +24,13 @@ function getById(id) {
     return Order.findById(id);
 }
 
+function getAll() {
+    return Order.find({}).populate('supplier');
+}
+
 function getOneBySupplierId(supplierId) {
     return Order.findOne({ supplierId });
-}   
+}
 
 function getAllBySupplierId(supplierId) {
     return Order.find({ supplierId });
@@ -57,5 +61,6 @@ module.exports = {
     getOneByReciverId: getOneByReciverId,
     getAllByReciverId: getAllByReciverId,
     getByReciverIdAndSupplierId: getByReciverIdAndSupplierId,
-    create: create
+    create: create,
+    getAll: getAll
 };

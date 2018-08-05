@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row ">
         <div class="col-lg-8">
-            <ngui-map zoom="13" center="40.748817,-73.985428" (mapReady$)="onMapReady($event)">
+            <ngui-map zoom="8" (mapReady$)="onMapReady($event)">
                 <marker *ngFor="let pos of markers" 
                     [position]="pos"
                     (initialized)="onMarkerInit($event)"></marker>
@@ -11,20 +11,20 @@
             </ngui-map>
         </div>
         <div class="col-lg-4 container-fluid">
-            <div *ngFor="let row of tableData1.dataRows" (click)="row.show = !row.show " class="order">
+            <div *ngFor="let row of orders" (click)="row.show = !row.show " class="order">
                 <div class="row">
                     <div class="col-lg-2 date">
                             <div *ngIf="row.isNew">חדש</div>
-                            {{row.created}}
+                            {{row.orderDate}}
                         </div>
                         <div class="col-lg-8 details">
-                            <h4>{{row.name}}</h4>
-                            <h6>{{row.address}}</h6>
-                            <h6>{{row.city}}</h6>
-                            <h6>{{row.phone}}</h6>
+                            <h4>{{row.supplier.details.name}}</h4>
+                            <h6>{{row.supplier.details.address}}</h6>
+                            <h6>{{row.supplier.details.region}}</h6>
+                            <h6>{{row.supplier.details.phone}}</h6>
                         </div>
                         <div class="col-lg-2 image">
-                            <img [src]="row.image">
+                            <img [src]="row.supplier.details.logo_image">
                     </div>
                 </div>
                 <div *ngIf="row.show" class="additional-info">
