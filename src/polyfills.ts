@@ -37,19 +37,16 @@
 /** IE10 and IE11 requires the following for NgClass support on SVG elements */
 // import 'classlist.js';  // Run `npm install --save classlist.js`.
 
-/** IE10 and IE11 requires the following for the Reflect API. */
-// import 'core-js/es6/reflect';
+/** IE10 and IE11 requires the following to support `@angular/animation`. */
+// import 'web-animations-js';  // Run `npm install --save web-animations-js`.
 
 
 /** Evergreen browsers require these. **/
-// Used for reflect-metadata in JIT. If you use AOT (and only Angular decorators), you can remove.
+import 'core-js/es6/reflect';
 import 'core-js/es7/reflect';
 
 
-/**
- * Required to support Web Animations `@angular/platform-browser/animations`.
- * Needed for: All but Chrome, Firefox and Opera. http://caniuse.com/#feat=web-animation
- **/
+/** ALL Firefox browsers require the following to support `@angular/animation`. **/
 // import 'web-animations-js';  // Run `npm install --save web-animations-js`.
 
 
@@ -74,5 +71,3 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
  * Need to import at least one locale-data with intl.
  */
 // import 'intl/locale-data/jsonp/en';
-// Add global to window, assigning the value of window itself.
-(window as any).global = window;
