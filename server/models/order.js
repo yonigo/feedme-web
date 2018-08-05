@@ -33,7 +33,7 @@ function getOneBySupplierId(supplierId) {
 }
 
 function getAllBySupplierId(supplierId) {
-    return Order.find({ supplierId });
+    return Order.find({ "supplier": supplierId });
 }
 
 function getOneByReciverId(reciverId) {
