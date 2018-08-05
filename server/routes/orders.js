@@ -6,8 +6,7 @@ var authenticationMiddleware = require('../middlewares/authentication');
 var router = express.Router();
 
 router.route('/')
-    .get(authenticationMiddleware(),
-    function(req, res) {
+    .get(function(req, res) {
         Order.getAll()
         .then(function(orders) {
             res.send(orders);
@@ -16,18 +15,19 @@ router.route('/')
 );
 
 router.route('/')
-    .post(//authenticationMiddleware(),
-    function(req, res) {
+    .post(function(req, res) {
         Order.create(req.body.data)
         .then(function(data) {
             res.send(data);
+        })
+        .catch(function(err) {
+            res.send(err);
         })
     }
 );
 
 router.route('/supplier/:id')
-    .get(authenticationMiddleware(),
-    function(req, res) {
+    .get(function(req, res) {
         Order.getAllBySupplierId(req.params.id)
         .then(function(orders) {
             res.send(orders);
@@ -36,8 +36,7 @@ router.route('/supplier/:id')
 );
 
 router.route('/reciver/:id')
-    .get(authenticationMiddleware(),
-    function(req, res) {
+    .get(function(req, res) {
         Order.getAllByReciverId(req.params.id)
         .then(function(orders) {
             res.send(orders);
