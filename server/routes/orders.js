@@ -50,7 +50,7 @@ router.route('/')
 
 router.route('/')
     .post(function(req, res) {
-        Order.create(req.body.data)
+        Order.create(req.body)
         .then(function(data) {
             var userTokens = []
             User.getAll().then((users) => {
@@ -58,7 +58,7 @@ router.route('/')
                     if (u.chromeToken)
                         userTokens.push(u.chromeToken);
                 }));
-                sendMessageToUsers(data);
+                sendMessageToUsers(userTokens, data);
                 res.send(data);
             })
         })
