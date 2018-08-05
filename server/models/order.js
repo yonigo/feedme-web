@@ -2,6 +2,10 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var orderSchema = new Schema({
+    _id: {
+        type: mongoose.Schema.ObjectId,
+        auto: true
+    },
     type: String,
     orderDate: Date,
     supplyDate: Date,
@@ -13,34 +17,36 @@ var orderSchema = new Schema({
     reciverId: String
 });
 
-var order = mongoose.model('order', orderSchema);
+var Order = mongoose.model('order', orderSchema);
 
 function getById(id) {
-    return order.findById(id);
+    return Order.findById(id);
 }
 
 function getOneBySupplierId(supplierId) {
-    return  order.findOne({ supplierId });
+    return  Order.findOne({ supplierId });
 }   
 
 function getAllBySupplierId(supplierId) {
-    return order.find({ supplierId });
+    return Order.find({ supplierId });
 }
 
 function getOneByReciverId(reciverId) {
-    return order.findOne({ reciverId });
+    return Order.findOne({ reciverId });
 }
 
 function getAllByReciverId(reciverId) {
-    return order.find({ reciverId });
+    return Order.find({ reciverId });
 }
 
 function getByReciverIdAndSupplierId(supplierId, reciverId) {
-    return order.find({ supplierId, reciverId });
+    return Order.find({ supplierId, reciverId });
 }
 
 function create(data) {
-    return order.create(data);
+    var order = new Order(data);
+
+    return order.save();
 }
 
 module.exports = {
