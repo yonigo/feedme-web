@@ -29,6 +29,7 @@
     "@angular/platform-browser-dynamic": "6.0.0",
     "@angular/pwa": "^0.6.8",
     "@angular/router": "6.0.0",
+    "@angular/service-worker": "6.0.0",
     "body-parser": "^1.18.3",
     "cookie-parser": "~1.4.3",
     "core-js": "^2.4.1",
@@ -37,12 +38,13 @@
     "express": "^4.16.3",
     "mongoose": "^4.13.4",
     "morgan": "^1.9.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "rxjs": "^6.1.0",
     "rxjs-compat": "^6.1.0",
     "serve-favicon": "~2.4.2",
     "typescript": "2.7.2",
-    "zone.js": "^0.8.26",
-    "@angular/service-worker": "6.0.0"
+    "zone.js": "^0.8.26"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.6.0",

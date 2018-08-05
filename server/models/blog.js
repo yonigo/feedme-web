@@ -17,16 +17,17 @@ function getAll() {
   Blog.find()
 }
 function getOne(err, id) {
-if(err){throw err}
-  Blog.find(id)
+  if(err){throw err}
+    Blog.find(id)
 }
+
 function findAndDelete(err, id) {
-getOne(id).delete()
+  getOne(id).delete()
 }
+
 function findAndUpdate(err, id) {
 
 }
-
 
 // make this available to our users in our Node applications
 module.exports = Blog;
