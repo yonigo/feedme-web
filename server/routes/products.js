@@ -4,11 +4,20 @@ var passport = require('passport');
 var Product = require('../models/product');
 
 router.route('/')
-    .get(passport.authenticate('local'),
-    function(req, res) {
-        var products = Product.getAll();
+    .get(function(req, res) {
+        Product.getAll()
+        .then(function(products) {
+            res.send(products);
+        });
+    }
+);
 
-        res.send(products);
+router.route('/:id')
+    .get(function(req, res) {
+        Product.getById(req.params.id)
+        .then(function(products) {
+            res.send(products);
+        });
     }
 );
 

@@ -1,11 +1,13 @@
 <div class="container-fluid">
     <div class="row ">
         <div class="col-lg-8">
-            <ngui-map zoom="13" center="40.748817,-73.985428" >
-                <marker [position]="[40.748817,-73.985428]"></marker>
-                <map-circle
+            <ngui-map zoom="13" center="40.748817,-73.985428" (mapReady$)="onMapReady($event)">
+                <marker *ngFor="let pos of markers" 
+                    [position]="pos"
+                    (initialized$)="onMarkerInit($event)"></marker>
+                <!-- <map-circle
                     [center]="{lat: 40.748817, lng: -73.985428}">
-                </map-circle>
+                </map-circle> -->
             </ngui-map>
         </div>
         <div class="col-lg-4 container-fluid">
