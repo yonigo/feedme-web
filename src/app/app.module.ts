@@ -16,6 +16,7 @@ import { TableComponent }   from './table/table.component';
 import { TypographyComponent }   from './typography/typography.component';
 import { IconsComponent }   from './icons/icons.component';
 import { MapsComponent }   from './maps/maps.component';
+import { OrdersComponent }   from './orders/orders.component';
 import { NotificationsComponent }   from './notifications/notifications.component';
 import { UpgradeComponent }   from './upgrade/upgrade.component';
 
@@ -28,6 +29,7 @@ import { UpgradeComponent }   from './upgrade/upgrade.component';
     TypographyComponent,
     IconsComponent,
     MapsComponent,
+    OrdersComponent,
     NotificationsComponent,
     UpgradeComponent
   ],

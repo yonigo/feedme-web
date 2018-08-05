@@ -8,11 +8,12 @@ import { IconsComponent }   from './icons/icons.component';
 import { MapsComponent }   from './maps/maps.component';
 import { NotificationsComponent }   from './notifications/notifications.component';
 import { UpgradeComponent }   from './upgrade/upgrade.component';
+import { OrdersComponent } from './orders/orders.component';
 
 export const AppRoutes: Routes = [
     {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'orders',
         pathMatch: 'full',
     },
     {
@@ -46,5 +47,9 @@ export const AppRoutes: Routes = [
     {
         path: 'upgrade',
         component: UpgradeComponent
+    },
+    {
+        path: 'orders',
+        component: OrdersComponent
     }
 ]

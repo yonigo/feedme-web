@@ -1,0 +1,54 @@
+.row {
+    margin: 0px;
+    background: white;
+    &:active, &:hover {
+        cursor: pointer;
+    }
+}
+
+.order {
+    border-bottom: 1px solid #ccc;
+}
+
+.col-lg-8 {
+    padding: 0;
+}
+
+.image {
+    text-align:center;
+    img {
+        width:100%
+    }
+}
+
+.details {
+    margin-top:6px;
+    margin-bottom:6px; 
+    h4 {
+        margin:0;
+        margin-bottom:6px; 
+        font-size: 18px;
+    }
+    h6{
+        margin: 0;
+        font-size: 14px;
+        font-weight: 400;
+        text-transform: none;
+        line-height: 16px;
+    }
+}
+
+.date {
+    padding-top: 10px;
+    div {
+        height: 24px;
+        background: #00B686;
+        color: white;
+        padding-right: 6px;
+    }
+}
+
+.additional-info {
+    background: #EFEFEF;
+    height: 150px;
+}
