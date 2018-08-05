@@ -1,14 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-var Product = require('../models/product');
+var ProductType = require('../models/productType');
 
 router.route('/')
     .get(passport.authenticate('local'),
     function(req, res) {
-        var products = Product.getAll();
+        var productTypes = ProductType.getAll();
 
-        res.send(products);
+        res.send(productTypes);
     }
 );
 

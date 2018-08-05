@@ -1,24 +1,24 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var productSchema = new Schema({
+var productTypeSchema = new Schema({
     id: String,
     name: String,
     weightUnit: String
 });
 
-var product = mongoose.model('product', productSchema);
+var productType = mongoose.model('productType', productTypeSchema);
 
 function getAll() {
-    return product.find();
+    return productType.find();
 }
 
 function getById(id) {
-    return product.findOne({ id });
+    return productType.findOne({ id });
 }
 
 function getByName(name) {
-    return product.findOne({ name });
+    return productType.findOne({ name });
 }
 
 module.exports = {
