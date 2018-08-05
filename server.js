@@ -19,18 +19,20 @@ var db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-app.use(passport.initialize());
+app.use(express.static("public"));
+app.use(cookieParser('test'));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
-  secret: 'keyboard cat',
+  secret: 'test',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true }
+  cookie: { httpOnly: false }
 }))
+app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(allowControlAccessMiddleware);
-app.use(cookieParser());
+
 app.use('/',express.static(path.join(__dirname, 'dist'))); // angular project
 app.use('/users', users);
 app.use('/orders', orders);

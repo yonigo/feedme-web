@@ -30,7 +30,7 @@ passport.deserializeUser(function(user, done) {
 });
 
 router.route('/login')
-    .post(passport.authenticate('local'),
+    .post(passport.authenticate('local', {session: true}),
     function(req, res) {
         var userDetails = {
             username: req.user.username,

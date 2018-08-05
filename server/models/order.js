@@ -39,11 +39,16 @@ function getByReciverIdAndSupplierId(supplierId, reciverId) {
     return order.find({ supplierId, reciverId });
 }
 
+function create(data) {
+    return order.create(data);
+}
+
 module.exports = {
     getById: getById,
     getOneBySupplierId: getOneBySupplierId,
     getAllBySupplierId: getAllBySupplierId,
     getOneByReciverId: getOneByReciverId,
     getAllByReciverId: getAllByReciverId,
-    getByReciverIdAndSupplierId: getByReciverIdAndSupplierId
+    getByReciverIdAndSupplierId: getByReciverIdAndSupplierId,
+    create: create
 };

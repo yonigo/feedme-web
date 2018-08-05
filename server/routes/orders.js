@@ -15,6 +15,16 @@ router.route('/')
     }
 );
 
+router.route('/')
+    .post(//authenticationMiddleware(),
+    function(req, res) {
+        Order.create(req.body.data)
+        .then(function(data) {
+            res.send(data);
+        })
+    }
+);
+
 router.route('/supplier/:id')
     .get(authenticationMiddleware(),
     function(req, res) {
