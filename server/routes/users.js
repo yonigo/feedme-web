@@ -33,6 +33,7 @@ router.route('/login')
     .post(passport.authenticate('local', {session: true}),
     function(req, res) {
         var userDetails = {
+            id: req.user._id,
             username: req.user.username,
             type: req.user.type,
             details: req.user.details
