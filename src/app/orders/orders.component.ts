@@ -97,9 +97,9 @@ export class OrdersComponent implements OnInit {
             });
           });
 
-          messaging.onMessage(function(payload) {
+          messaging.onMessage((payload) => {
             console.log('Message received. ', payload);
-            this.httpClient.get('http://localhost:3000/orders/' + payload.id).toPromise().then(function(data) {
+            this.httpClient.get('http://localhost:3000/orders/' + payload.data.order).toPromise().then((data: any)=> {
                 data.isNew = true;
                 data.orderDate = new Date(data.orderDate).toDateString();
                 this.googleGeoCode.geolookup(data.supplier.details.address).then(result => {
@@ -109,6 +109,7 @@ export class OrdersComponent implements OnInit {
                         this.map.setCenter([result[0].lat, result[0].lng]);
                 });
                 this.orders.push(data);
+                this.setZoom();
             }).catch(err => {
                 console.log(err);
             })
@@ -151,5 +152,18 @@ export class OrdersComponent implements OnInit {
         this.map = map;
         if (this.markers[0])
             this.map.setCenter(this.markers[0].raw.geometry.location);
+        this.setZoom();
+    }
+
+    setZoom() {
+        var bounds = new google.maps.LatLngBounds();
+        for (var i = 0; i < this.markers.length; i++) {
+            let marker =new google.maps.Marker({
+                position: this.markers[i].raw.geometry.location
+            });
+            bounds.extend(marker.getPosition());
+        }
+
+        this.map.fitBounds(bounds);
     }
 }

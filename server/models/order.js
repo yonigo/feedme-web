@@ -21,7 +21,7 @@ var orderSchema = new Schema({
 var Order = mongoose.model('order', orderSchema);
 
 function getById(id) {
-    return Order.findById(id);
+    return Order.findById(id).populate('supplier');
 }
 
 function getAll() {
