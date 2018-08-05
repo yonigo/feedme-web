@@ -3,6 +3,7 @@ const app = express();
 const path = require('path')
 const users = require('./server/routes/users');
 const orders = require('./server/routes/orders');
+const products = require('./server/routes/products');
 const mongoose = require('mongoose')
 const dotenv = require('dotenv').config()
 var cookieParser = require('cookie-parser');
@@ -36,6 +37,7 @@ app.use(allowControlAccessMiddleware);
 app.use('/',express.static(path.join(__dirname, 'dist'))); // angular project
 app.use('/users', users);
 app.use('/orders', orders);
+app.use('/products', products);
 
 const port = process.env.PORT || 3000; // PORT is another variable that can be placed in the .env file
 app.listen(port, function(){

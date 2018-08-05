@@ -25,7 +25,7 @@ function getById(id) {
 }
 
 function getOneBySupplierId(supplierId) {
-    return  Order.findOne({ supplierId });
+    return Order.findOne({ supplierId });
 }   
 
 function getAllBySupplierId(supplierId) {
