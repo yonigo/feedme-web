@@ -1,7 +1,7 @@
 import { Component,OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-declare var google: any, GeoCode: any, firebase: any;
+declare var google: any, GeoCode: any, firebase: any, $: any;
 
 @Component({
     moduleId: module.id,
@@ -15,17 +15,18 @@ export class OrdersComponent implements OnInit {
     public tableData1: any;
     public markers: any = [];
     public map: any = null;
+    public products: any = [];
     private googleGeoCode: any;
-    public user = {
+    public user: any = {
         "username": "backoffice01",
         "password": "123456"
     };
     public orders: any = [];
 
     constructor(private httpClient:HttpClient) {
-        this.googleGeoCode   = new GeoCode('google', { key: 'AIzaSyD_NMEe_Y-jP1p37eXkI_ua5J-XXi_TTFA' });
+        this.googleGeoCode   = new GeoCode('google', { key: 'AIzaSyB3tRdzJeZlsyOljoj2kl8xrfVXu5EjJ_Q' });
 
-        //httpClient.post('http://localhost:3000/users/login', this.user).toPromise();
+        httpClient.post('http://localhost:3000/users/login', this.user).toPromise().then((data) => { this.user = data});
         httpClient.get('http://localhost:3000/orders').toPromise().then((data) => {
             console.log(data);
             this.orders = data;
@@ -33,11 +34,18 @@ export class OrdersComponent implements OnInit {
                 e.orderDate = new Date(e.orderDate).toDateString();
                 this.googleGeoCode.geolookup(e.supplier.details.address).then(result => {
                     console.log(result);
-                    this.markers.push(result[0]);
+                    this.markers.push({pos: result[0], icon: '../../assets/icons/disableMap.png'});
                     if (this.map)
                         this.map.setCenter([result[0].lat, result[0].lng]);
                 });
             });
+            return httpClient.get('http://localhost:3000/products').toPromise()
+        }).then((products) => {
+            this.products = products;
+            this.orders.forEach( o => {
+                o.product = this.products.filter((p) => p._id === o.product)[0];
+            });
+            console.log( this.orders);
         }).catch(err => {
             console.log(err);
         })
@@ -54,7 +62,7 @@ export class OrdersComponent implements OnInit {
     ngOnInit() {
 
         const messaging = firebase.messaging();
-        messaging.usePublicVapidKey("BFEu4qbkvDdhsxAySDDom7WddVoJpm9q2zXDODZ61FcetroIErhVkD6lS3kXE8XjJjchXD9GuslTgYvsqs_98YY");
+        messaging.usePublicVapidKey("BEZO8ocgl3D_81b9rA1EiuUD4a6Ero8hytoVYmlT8G7kGdSoi8zCKcS8mF4-IE4szpR2QDIVCIj-1DTvFLAwQhI");
         messaging.requestPermission().then(function() {
             console.log('Notification permission granted.');
             // TODO(developer): Retrieve an Instance ID token for use with FCM.
@@ -104,12 +112,13 @@ export class OrdersComponent implements OnInit {
                 data.orderDate = new Date(data.orderDate).toDateString();
                 this.googleGeoCode.geolookup(data.supplier.details.address).then(result => {
                     console.log(result);
-                    this.markers.push(result[0]);
+                    this.markers.push({pos: result[0], icon: '../../assets/icons/enableMap.png'});
                     if (this.map)
                         this.map.setCenter([result[0].lat, result[0].lng]);
                 });
                 this.orders.push(data);
                 this.setZoom();
+                this.showNotification('bottom','left');
             }).catch(err => {
                 console.log(err);
             })
@@ -124,34 +133,12 @@ export class OrdersComponent implements OnInit {
                 { name: 'four', address:'Dizengoff', city: 'Tel Aviv', phone: '044-4222333', isNew: false, created: new Date().toDateString(), image: 'http://befreshcorp.net/wp-content/uploads/2017/06/product-packshot-Carrot-558x600.jpg'}
             ]
         };
-
-
-
-
-
-        // var myLatlng = new google.maps.LatLng(40.748817, -73.985428);
-        // var mapOptions = {
-        //   zoom: 13,
-        //   center: myLatlng,
-        //   scrollwheel: false, //we disable de scroll over the map, it is a really annoing when you scroll through page
-        //   styles: [{"featureType":"water","stylers":[{"saturation":43},{"lightness":-11},{"hue":"#0088ff"}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"hue":"#ff0000"},{"saturation":-100},{"lightness":99}]},{"featureType":"road","elementType":"geometry.stroke","stylers":[{"color":"#808080"},{"lightness":54}]},{"featureType":"landscape.man_made","elementType":"geometry.fill","stylers":[{"color":"#ece2d9"}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"color":"#ccdca1"}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#767676"}]},{"featureType":"road","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"}]},{"featureType":"poi","stylers":[{"visibility":"off"}]},{"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#b8cb93"}]},{"featureType":"poi.park","stylers":[{"visibility":"on"}]},{"featureType":"poi.sports_complex","stylers":[{"visibility":"on"}]},{"featureType":"poi.medical","stylers":[{"visibility":"on"}]},{"featureType":"poi.business","stylers":[{"visibility":"simplified"}]}]
-        //
-        // }
-        // var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-        //
-        // var marker = new google.maps.Marker({
-        //     position: myLatlng,
-        //     title:"Hello World!"
-        // });
-        //
-        // // To add the marker to the map, call setMap();
-        // marker.setMap(map);
     }
 
     onMapReady(map) {
         this.map = map;
         if (this.markers[0])
-            this.map.setCenter(this.markers[0].raw.geometry.location);
+            this.map.setCenter(this.markers[0].pos.raw.geometry.location);
         this.setZoom();
     }
 
@@ -159,11 +146,40 @@ export class OrdersComponent implements OnInit {
         var bounds = new google.maps.LatLngBounds();
         for (var i = 0; i < this.markers.length; i++) {
             let marker =new google.maps.Marker({
-                position: this.markers[i].raw.geometry.location
+                position: this.markers[i].pos.raw.geometry.location
             });
             bounds.extend(marker.getPosition());
         }
 
         this.map.fitBounds(bounds);
+    }
+
+    toggleOrder(order) {
+        order.show = !order.show;
+        this.orders.forEach((o, i) => {
+            if (o.show) 
+                this.markers[i].icon = '../../assets/icons/enableMap.png'
+            else
+            this.markers[i].icon = '../../assets/icons/disableMap.png';
+        })
+    }
+
+    showNotification(from, align){
+
+    	$.notify({
+        	message: "התקבלה הזמנה חדשה"
+        },{
+            type: 'success',
+            timer: 4000,
+            placement: {
+                from: from,
+                align: align
+            }
+        });
+    }
+
+    openModal(event, order) {
+        event.stopPropagation();
+        this.httpClient.post('http://localhost:3000/orders/accept', {id: order.id, userId: this.user.id }).toPromise().then((data) => { });
     }
 }

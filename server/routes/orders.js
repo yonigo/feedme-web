@@ -10,17 +10,17 @@ var serverKey = require('../../key.json') //put the generated private key path h
 
 var fcm = new FCM(serverKey);
 
-function sendMessageToUsers(tokens, order) {
+function sendMessageToUsers(tokens, data, title, body) {
     var message = { //this may vary according to the message type (single recipient, multicast, topic, et cetera)
         registration_ids: tokens,//'fMOv0mfRSlg:APA91bFHktwuwHf12AU2X8ajCaSh4Lp3UJ3THK4vuW1M8VEWp8sBiYYE_kpWWfjtz7Qw2QNBcGPNqPKAbYnK8XLyfwAIFLTe1-pZizVjQ6o17o0r2v-zr7j-EGhQbaUTRAwO4L-SQOEP', 
         
         notification: {
-            title: 'New Order Created', 
-            body: 'Body of your push notification' 
+            title: title || 'New Order Created', 
+            body: body || 'Body of your push notification' 
         },
         
         data: {  //you can send only notification or only data(or include both)
-            order: order.id,
+            order: data.id,
             my_another_key: 'my another value'
         }
       }
@@ -59,6 +59,27 @@ router.route('/')
                         userTokens.push(u.chromeToken);
                 }));
                 sendMessageToUsers(userTokens, data);
+                res.send(data);
+            })
+        })
+        .catch(function(err) {
+            res.send(err);
+        })
+    }
+);
+
+router.route('/accept')
+    .post(function(req, res) {
+        Order.update({query: {id: req.body.id}, set: {reciver: req.body.userId}})
+        .then(function(data) {
+            var userTokens = []
+            User.getAll().then((users) => {
+                users.forEach((u => {
+                    if (u.gcmToken && u.id === req.body.userId)
+                        userTokens.push(u.chromeToken);
+                }));
+                if (userTokens.length > 0)
+                    sendMessageToUsers(userTokens, data, 'New pickup approval', 'Check who is coming');
                 res.send(data);
             })
         })

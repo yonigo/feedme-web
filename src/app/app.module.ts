@@ -42,7 +42,7 @@ import { HttpClientModule } from '@angular/common/http';
     FooterModule,
     FixedPluginModule,
     HttpClientModule,
-    NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyD_NMEe_Y-jP1p37eXkI_ua5J-XXi_TTFA'})
+    NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyB3tRdzJeZlsyOljoj2kl8xrfVXu5EjJ_Q'})
   ],
   providers: [],
   bootstrap: [AppComponent]

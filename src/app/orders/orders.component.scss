@@ -1,6 +1,7 @@
 .row {
     margin: 0px;
     background: white;
+    position: relative;
     &:active, &:hover {
         cursor: pointer;
     }
@@ -16,8 +17,15 @@
 
 .image {
     text-align:center;
-    img {
-        width:100%
+    height:100%;
+    position: absolute;
+    div {
+        height: 60px;
+        width: 60px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        margin-top: 12px;
     }
 }
 
@@ -35,11 +43,16 @@
         font-weight: 400;
         text-transform: none;
         line-height: 16px;
+        &:last-child {
+            font-size: 12px;
+            margin-top: 3px;
+        }
     }
 }
 
 .date {
     padding-top: 10px;
+    font-weight: 600;
     div {
         height: 24px;
         background: #00B686;
@@ -50,5 +63,27 @@
 
 .additional-info {
     background: #EFEFEF;
+    &.container-fluid {
+        padding: 15px;
+    }
     height: 150px;
+    .row {
+        background: transparent;
+        .col-lg-6 {
+            div {
+                color: #00B686;
+                line-height: 22px;
+                span {
+                    color: #5e5e5e;
+                }
+            }
+        }
+        img {
+            width: 20px;
+        }
+    }
+    button {
+        border-radius: 4px;
+        margin: 5px;
+    }
 }

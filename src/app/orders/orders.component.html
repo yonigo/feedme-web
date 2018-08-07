@@ -2,8 +2,9 @@
     <div class="row ">
         <div class="col-lg-8">
             <ngui-map zoom="8" (mapReady$)="onMapReady($event)">
-                <marker *ngFor="let pos of markers" 
-                    [position]="pos"
+                <marker *ngFor="let m of markers" 
+                    [position]="m.pos"
+                    [icon]="m.icon"
                     (initialized)="onMarkerInit($event)"></marker>
                 <!-- <map-circle
                     [center]="{lat: 40.748817, lng: -73.985428}">
@@ -11,7 +12,7 @@
             </ngui-map>
         </div>
         <div class="col-lg-4 container-fluid">
-            <div *ngFor="let row of orders" (click)="row.show = !row.show " class="order">
+            <div *ngFor="let row of orders" (click)="toggleOrder(row)" class="order">
                 <div class="row">
                     <div class="col-lg-2 date">
                             <div *ngIf="row.isNew">חדש</div>
@@ -24,11 +25,26 @@
                             <h6>{{row.supplier.details.phone}}</h6>
                         </div>
                         <div class="col-lg-2 image">
-                            <img [src]="row.supplier.details.logo_image">
+                            <div [ngStyle]="{ 'background-image': 'url(' + row.supplier.details.logo_image + ')'}"></div>
                     </div>
                 </div>
-                <div *ngIf="row.show" class="additional-info">
-                    Yo
+                <div *ngIf="row.show" class="additional-info container-fluid">
+                    <div class="row">
+                            <div class="col-lg-6">
+                                <div>לאיסוף עד: <span>{{row.pickupDate | date}}</span></div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div>מספר קריאה: <span>{{row.number}}</span></div>
+                                <div>סוג: <span>{{row.type}}</span></div>
+                                <div>סחורה לבחירה: <span><img [src]="row.product.imageURL"> {{row.product.name + ' ' + row.quantity + 'קג'}}</span></div>
+                            </div>
+                    </div>
+                    <div class="row">   
+                        <div class="">
+                            <button type="button" class="btn btn-success" (click)="openModal($event, row)">הזמן</button>
+                            <button type="button" class="btn btn-light">סגור</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

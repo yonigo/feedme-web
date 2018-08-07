@@ -15,7 +15,7 @@ var orderSchema = new Schema({
     quantity: Number,
     package: String,
     supplier: { type: Schema.Types.ObjectId, ref: 'User' },
-    reciverId: String
+    reciver: { type: Schema.Types.ObjectId, ref: 'User' }
 });
 
 var Order = mongoose.model('order', orderSchema);
@@ -54,6 +54,10 @@ function create(data) {
     return order.save();
 }
 
+function update(data) {
+    return Order.findOneAndUpdate(data.query, {$set: data.set});
+}
+
 module.exports = {
     getById: getById,
     getOneBySupplierId: getOneBySupplierId,
@@ -62,5 +66,6 @@ module.exports = {
     getAllByReciverId: getAllByReciverId,
     getByReciverIdAndSupplierId: getByReciverIdAndSupplierId,
     create: create,
-    getAll: getAll
+    getAll: getAll,
+    update: update
 };
